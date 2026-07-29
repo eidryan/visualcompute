@@ -1,5 +1,6 @@
 from visualcompute.activity import event_at, summarize_events
 from visualcompute.engine import map_detection_rows
+from visualcompute.real_demo import mapped_events
 from visualcompute.scenario import demo_events, detections_at
 
 
@@ -40,3 +41,15 @@ def test_frame_predictions_are_collapsed_into_events():
     assert mapped[5].object_ids == (7, 14, 21)
     assert mapped[7].attributes["item"] == "granola"
     assert mapped[-1].end == 22.0
+
+
+def test_breakfast_ground_truth_maps_to_acai_proxy():
+    events = mapped_events()
+    assert [event.activity for event in events] == [
+        "pick_up_bowl",
+        "add_ingredient",
+        "dispense_acai",
+        "mix_contents",
+    ]
+    assert events[1].attributes["source_label"] == "pour_cereals"
+    assert events[0].status == "source_annotation"
