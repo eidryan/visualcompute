@@ -1,0 +1,51 @@
+station:
+  id: demo_acai_01
+  camera: overhead_oblique
+  fps: 15
+  zones:
+    prep_zone: [0.10, 0.30, 0.72, 0.92]
+    ingredient_zone: [0.20, 0.18, 0.65, 0.48]
+    dispense_zone: [0.40, 0.00, 0.55, 0.66]
+    scale_zone: [0.40, 0.56, 0.55, 0.78]
+    tray_zone: [0.63, 0.54, 0.82, 0.79]
+    handoff_zone: [0.75, 0.30, 1.00, 0.94]
+
+objects:
+  - worker
+  - customer
+  - bowl
+  - tray
+  - scoop
+  - acai_dispenser
+  - ingredient_bin
+  - scale
+  - phone
+
+activities:
+  sequence:
+    - approach_station
+    - pick_up_bowl
+    - place_bowl_on_scale
+    - dispense_acai
+    - retrieve_ingredient
+    - add_ingredient
+    - mix_contents
+    - place_on_tray
+    - handoff_order
+  optional:
+    - use_phone
+    - idle
+
+thresholds:
+  detector_confidence: 0.45
+  track_lost_seconds: 1.0
+  proximity_pixels: 80
+  zone_dwell_seconds: 0.35
+  mixing_direction_changes: 4
+  handoff_dwell_seconds: 0.5
+
+privacy:
+  face_recognition: false
+  audio_capture: false
+  store_raw_video: false
+  event_retention_days: 90
