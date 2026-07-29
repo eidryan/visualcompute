@@ -7,6 +7,7 @@ from .activity import load_events, write_activity_log
 from .annotate import annotate_video
 from .demo import generate_demo
 from .engine import map_detection_rows, read_detection_rows
+from .real_demo import generate_real_demo
 
 
 def _demo(args: argparse.Namespace) -> int:
@@ -36,6 +37,13 @@ def _annotate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _real_demo(args: argparse.Namespace) -> int:
+    outputs = generate_real_demo(Path(args.video), Path(args.output))
+    for name, path in outputs.items():
+        print(f"{name}: {path}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="visualcompute",
@@ -45,6 +53,14 @@ def build_parser() -> argparse.ArgumentParser:
     demo = subparsers.add_parser("demo", help="Generate a complete synthetic açaí workflow demo")
     demo.add_argument("--output", default="artifacts")
     demo.set_defaults(func=_demo)
+
+    real_demo = subparsers.add_parser(
+        "real-demo",
+        help="Map Breakfast Actions cereal annotations over a real video",
+    )
+    real_demo.add_argument("video", help="P03_cereals.avi from Breakfast Actions")
+    real_demo.add_argument("--output", default="output-real")
+    real_demo.set_defaults(func=_real_demo)
 
     annotate = subparsers.add_parser("annotate", help="Render detections and mapped activities over a video")
     annotate.add_argument("video")
