@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
 import cv2
+import imageio_ffmpeg
 import numpy as np
 
 from .activity import ACTIVITY_META, ActivityEvent, write_activity_log
@@ -202,6 +204,7 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
     source_height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     output_dir.mkdir(parents=True, exist_ok=True)
     clean_path = output_dir / "breakfast_cereals_clean.mp4"
+    browser_path = output_dir / "breakfast_cereals_browser.mp4"
     annotated_path = output_dir / "breakfast_cereals_annotated.mp4"
     log_path = output_dir / "activity_log.json"
     jsonl_path = output_dir / "activity_log.jsonl"
@@ -252,6 +255,11 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
     capture.release()
     writer.release()
     clean_writer.release()
+    subprocess.run([
+        imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-i", str(clean_path),
+        "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "22",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(browser_path),
+    ], check=True, capture_output=True)
     events = mapped_events(fps)
     write_activity_log(events, log_path, jsonl_path, {
         "dataset": "CVML-TueAI/Breakfast-Actions",
@@ -275,6 +283,7 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
     }, indent=2), encoding="utf-8")
     return {
         "clean_video": clean_path,
+        "browser_video": browser_path,
         "annotated_video": annotated_path,
         "activity_log": log_path,
         "activity_jsonl": jsonl_path,
