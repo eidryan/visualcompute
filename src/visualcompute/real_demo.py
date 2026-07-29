@@ -198,7 +198,10 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
         raise RuntimeError(f"Could not open Breakfast Actions video: {input_path}")
     fps = capture.get(cv2.CAP_PROP_FPS) or 15.0
     frame_count = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
+    source_width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    source_height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
     output_dir.mkdir(parents=True, exist_ok=True)
+    clean_path = output_dir / "breakfast_cereals_clean.mp4"
     annotated_path = output_dir / "breakfast_cereals_annotated.mp4"
     log_path = output_dir / "activity_log.json"
     jsonl_path = output_dir / "activity_log.jsonl"
@@ -209,6 +212,11 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
     )
     if not writer.isOpened():
         raise RuntimeError(f"Could not create real-data demo: {annotated_path}")
+    clean_writer = cv2.VideoWriter(
+        str(clean_path), cv2.VideoWriter_fourcc(*"mp4v"), fps, (source_width, source_height),
+    )
+    if not clean_writer.isOpened():
+        raise RuntimeError(f"Could not create clean real-data video: {clean_path}")
 
     subtractor = cv2.createBackgroundSubtractorMOG2(
         history=90, varThreshold=24, detectShadows=True,
@@ -220,6 +228,7 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
             if not ok:
                 break
             segment = _segment_at(frame_index)
+            clean_writer.write(source)
             last_box = _motion_box(subtractor, source, last_box)
             canvas = np.full((720, 1280, 3), (12, 12, 20), dtype=np.uint8)
             canvas[:, :960] = cv2.resize(source, (960, 720), interpolation=cv2.INTER_CUBIC)
@@ -242,6 +251,7 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
 
     capture.release()
     writer.release()
+    clean_writer.release()
     events = mapped_events(fps)
     write_activity_log(events, log_path, jsonl_path, {
         "dataset": "CVML-TueAI/Breakfast-Actions",
@@ -264,6 +274,7 @@ def generate_real_demo(input_path: Path, output_dir: Path) -> dict[str, Path]:
         "note": "Verify the exact mirror provenance and terms before redistributing this video commercially.",
     }, indent=2), encoding="utf-8")
     return {
+        "clean_video": clean_path,
         "annotated_video": annotated_path,
         "activity_log": log_path,
         "activity_jsonl": jsonl_path,
