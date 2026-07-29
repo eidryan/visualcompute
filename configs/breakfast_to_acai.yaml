@@ -1,0 +1,59 @@
+source:
+  dataset: CVML-TueAI/Breakfast-Actions
+  repository: https://huggingface.co/datasets/CVML-TueAI/Breakfast-Actions
+  fps: 15
+  preferred_cameras: [webcam01, webcam02, cam01]
+  preferred_activities: [cereals, milk, coffee, tea, salat]
+
+mapping:
+  take_bowl:
+    target: pick_up_bowl
+    strength: strong
+  take_cup:
+    target: pick_up_bowl
+    attributes: {container_type: cup}
+    strength: medium
+  pour_cereals:
+    target: add_ingredient
+    attributes: {item: dry_topping_proxy}
+    strength: strong
+  spoon_powder:
+    target: add_ingredient
+    attributes: {item: powder_topping_proxy}
+    strength: strong
+  pour_milk:
+    target: dispense_acai
+    attributes: {item: liquid_base_proxy}
+    strength: medium
+  pour_coffee:
+    target: dispense_acai
+    attributes: {item: liquid_base_proxy}
+    strength: medium
+  stir_milk:
+    target: mix_contents
+    strength: strong
+  stir_coffee:
+    target: mix_contents
+    strength: strong
+  stir_tea:
+    target: mix_contents
+    strength: strong
+  cut_fruit:
+    target: retrieve_ingredient
+    attributes: {item: fruit_proxy}
+    strength: weak
+  put_fruit2bowl:
+    target: add_ingredient
+    attributes: {item: fruit_proxy}
+    strength: strong
+
+not_covered:
+  - place_bowl_on_scale
+  - place_on_tray
+  - handoff_order
+  - use_phone
+
+policy:
+  purpose: pipeline validation and representation pretraining
+  commercial_training: only after confirming source rights
+  target_domain_validation_required: true
