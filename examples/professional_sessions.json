@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "sessions": [
+    {
+      "id": "ucf_fastfood",
+      "label": "UCF Fast Food — sandwich assembly",
+      "video": "ucf_fastfood_browser.mp4",
+      "activity_log": "ucf_activity_log.json",
+      "tracks": null,
+      "badge": "PROFESSIONAL / HUMAN REVIEW",
+      "description": "Static-camera fast-food sandwich production research sequence."
+    },
+    {
+      "id": "breakfast_cereals",
+      "label": "Breakfast Actions — bowl, pour and mix",
+      "video": "breakfast_cereals_browser.mp4",
+      "activity_log": "activity_log.json",
+      "tracks": "motion_tracks.jsonl",
+      "badge": "PUBLIC DATASET / SOURCE GT",
+      "description": "Fixed-view real-person preparation with published temporal annotations."
+    }
+  ]
+}
