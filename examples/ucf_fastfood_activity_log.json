@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "dataset": "UCF Monitoring Fast Food Production",
+    "source_page": "https://www.crcv.ucf.edu/research/monitoring-fast-food-production/",
+    "source_video": "rr_iccv2001_seq2.mpg",
+    "fps": 30,
+    "annotation_type": "coarse human review of published research-result video",
+    "rights_note": "No explicit media reuse license found; internal research/demo only until permission is confirmed."
+  },
+  "summary": {
+    "orders": 1,
+    "events": 5,
+    "cycle_time": 46.4,
+    "activities": [
+      "initialize_station",
+      "retrieve_container",
+      "retrieve_ingredient",
+      "add_ingredient",
+      "assemble_order"
+    ]
+  },
+  "events": [
+    {
+      "event_id": "ucf_evt_001",
+      "order_id": "UCF_SANDWICH_SEQ2",
+      "activity": "initialize_station",
+      "start": 0,
+      "end": 6,
+      "duration": 6,
+      "confidence": 1,
+      "actor_id": 1,
+      "object_ids": [],
+      "attributes": {
+        "source_label": "station initialization",
+        "annotation_source": "human_review"
+      },
+      "evidence": [
+        "Published UCF research-result sequence",
+        "Coarse visual review; not source ground truth"
+      ],
+      "status": "human_review"
+    },
+    {
+      "event_id": "ucf_evt_002",
+      "order_id": "UCF_SANDWICH_SEQ2",
+      "activity": "retrieve_container",
+      "start": 6,
+      "end": 15,
+      "duration": 9,
+      "confidence": 1,
+      "actor_id": 1,
+      "object_ids": [],
+      "attributes": {
+        "item": "bread",
+        "source_label": "arm reaches bread bin",
+        "annotation_source": "human_review"
+      },
+      "evidence": [
+        "Visible arm-to-bin interaction in UCF result video"
+      ],
+      "status": "human_review"
+    },
+    {
+      "event_id": "ucf_evt_003",
+      "order_id": "UCF_SANDWICH_SEQ2",
+      "activity": "retrieve_ingredient",
+      "start": 15,
+      "end": 26,
+      "duration": 11,
+      "confidence": 1,
+      "actor_id": 1,
+      "object_ids": [],
+      "attributes": {
+        "item": "deli_filling",
+        "source_label": "arm reaches ingredient bins",
+        "annotation_source": "human_review"
+      },
+      "evidence": [
+        "Visible ingredient-bin retrieval sequence"
+      ],
+      "status": "human_review"
+    },
+    {
+      "event_id": "ucf_evt_004",
+      "order_id": "UCF_SANDWICH_SEQ2",
+      "activity": "add_ingredient",
+      "start": 26,
+      "end": 37,
+      "duration": 11,
+      "confidence": 1,
+      "actor_id": 1,
+      "object_ids": [],
+      "attributes": {
+        "item": "lettuce_ham",
+        "source_label": "merge ingredient with bread stack",
+        "annotation_source": "human_review"
+      },
+      "evidence": [
+        "Published overlay describes merging ingredients with bread stack"
+      ],
+      "status": "human_review"
+    },
+    {
+      "event_id": "ucf_evt_005",
+      "order_id": "UCF_SANDWICH_SEQ2",
+      "activity": "assemble_order",
+      "start": 37,
+      "end": 46.4,
+      "duration": 9.4,
+      "confidence": 1,
+      "actor_id": 1,
+      "object_ids": [],
+      "attributes": {
+        "source_label": "sandwich stack completion",
+        "annotation_source": "human_review"
+      },
+      "evidence": [
+        "Final sandwich-assembly interactions in the sequence"
+      ],
+      "status": "human_review"
+    }
+  ]
+}
