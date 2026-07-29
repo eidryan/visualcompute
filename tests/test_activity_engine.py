@@ -30,11 +30,13 @@ def test_frame_predictions_are_collapsed_into_events():
             "activity": active.activity if active else None,
             "activity_confidence": active.confidence if active else 0,
             "activity_attributes": active.attributes if active else {},
+            "activity_object_ids": list(active.object_ids) if active else [],
             "evidence": list(active.evidence) if active else [],
             "detections": [item.to_dict() for item in detections_at(timestamp)],
         })
     mapped = map_detection_rows(rows, "ORDER_0007")
     assert [event.activity for event in mapped] == [event.activity for event in reference]
     assert mapped[5].attributes["item"] == "banana"
+    assert mapped[5].object_ids == (7, 14, 21)
     assert mapped[7].attributes["item"] == "granola"
     assert mapped[-1].end == 22.0
