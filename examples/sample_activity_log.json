@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "video": "demo_annotated.mp4",
+    "station_id": "demo_acai_01",
+    "generated": true,
+    "privacy": {"faces": "not identified", "audio": false}
+  },
+  "summary": {
+    "orders": 1,
+    "events": 11,
+    "cycle_time": 22.0,
+    "mean_confidence": 0.945,
+    "activities": ["add_ingredient", "approach_station", "dispense_acai", "handoff_order", "mix_contents", "pick_up_bowl", "place_bowl_on_scale", "place_on_tray", "retrieve_ingredient"]
+  },
+  "events": [
+    {"event_id":"evt_001","order_id":"ORDER_0007","activity":"approach_station","start":0.0,"end":1.6,"duration":1.6,"confidence":0.97,"actor_id":1,"object_ids":[],"attributes":{},"evidence":["worker centroid entered prep_zone"],"status":"observed"},
+    {"event_id":"evt_002","order_id":"ORDER_0007","activity":"pick_up_bowl","start":1.6,"end":3.2,"duration":1.6,"confidence":0.95,"actor_id":1,"object_ids":[7],"attributes":{},"evidence":["worker #1 and bowl #7 converged","bowl #7 began moving"],"status":"observed"},
+    {"event_id":"evt_003","order_id":"ORDER_0007","activity":"place_bowl_on_scale","start":3.2,"end":4.8,"duration":1.6,"confidence":0.96,"actor_id":1,"object_ids":[7,31],"attributes":{},"evidence":["bowl #7 overlaps scale #31"],"status":"observed"},
+    {"event_id":"evt_004","order_id":"ORDER_0007","activity":"dispense_acai","start":4.8,"end":7.4,"duration":2.6,"confidence":0.94,"actor_id":1,"object_ids":[7,30],"attributes":{"item":"acai_base"},"evidence":["bowl #7 below dispenser #30","scale delta +312 g"],"status":"observed"},
+    {"event_id":"evt_005","order_id":"ORDER_0007","activity":"retrieve_ingredient","start":7.4,"end":9.0,"duration":1.6,"confidence":0.92,"actor_id":1,"object_ids":[14,21],"attributes":{"item":"banana"},"evidence":["scoop #14 left banana bin #21"],"status":"observed"},
+    {"event_id":"evt_006","order_id":"ORDER_0007","activity":"add_ingredient","start":9.0,"end":10.8,"duration":1.8,"confidence":0.95,"actor_id":1,"object_ids":[7,14,21],"attributes":{"item":"banana"},"evidence":["bin-to-bowl transfer","scale delta +38 g"],"status":"observed"},
+    {"event_id":"evt_007","order_id":"ORDER_0007","activity":"retrieve_ingredient","start":10.8,"end":12.2,"duration":1.4,"confidence":0.93,"actor_id":1,"object_ids":[14,22],"attributes":{"item":"granola"},"evidence":["scoop #14 left granola bin #22"],"status":"observed"},
+    {"event_id":"evt_008","order_id":"ORDER_0007","activity":"add_ingredient","start":12.2,"end":14.2,"duration":2.0,"confidence":0.94,"actor_id":1,"object_ids":[7,14,22],"attributes":{"item":"granola"},"evidence":["bin-to-bowl transfer","scale delta +24 g"],"status":"observed"},
+    {"event_id":"evt_009","order_id":"ORDER_0007","activity":"mix_contents","start":14.2,"end":16.9,"duration":2.7,"confidence":0.91,"actor_id":1,"object_ids":[7,14],"attributes":{},"evidence":["repeated scoop motion inside bowl #7"],"status":"observed"},
+    {"event_id":"evt_010","order_id":"ORDER_0007","activity":"place_on_tray","start":16.9,"end":18.9,"duration":2.0,"confidence":0.96,"actor_id":1,"object_ids":[7,11],"attributes":{},"evidence":["bowl #7 overlaps tray #11"],"status":"observed"},
+    {"event_id":"evt_011","order_id":"ORDER_0007","activity":"handoff_order","start":18.9,"end":22.0,"duration":3.1,"confidence":0.97,"actor_id":1,"object_ids":[2,7,11],"attributes":{},"evidence":["order crossed handoff_zone","customer #2 present"],"status":"observed"}
+  ]
+}
