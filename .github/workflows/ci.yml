@@ -1,0 +1,35 @@
+name: verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-and-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Test
+        run: pytest
+      - name: Generate annotated demo
+        run: visualcompute demo --output artifacts
+      - name: Verify outputs
+        run: |
+          test -s artifacts/demo_annotated.mp4
+          test -s artifacts/activity_log.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visualcompute-demo
+          path: |
+            artifacts/demo_annotated.mp4
+            artifacts/activity_log.json
+            artifacts/activity_log.jsonl
+          retention-days: 14
