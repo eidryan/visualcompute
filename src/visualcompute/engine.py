@@ -43,11 +43,13 @@ class ActivityMapper:
         confidence: float = 0.0,
         attributes: dict[str, Any] | None = None,
         evidence: list[str] | None = None,
+        focus_object_ids: list[int] | tuple[int, ...] | None = None,
     ) -> None:
         if not activity or activity in {"unknown", "idle"}:
             return
         actor = next((d.track_id for d in detections if d.label == "worker"), 0)
-        object_ids = {d.track_id for d in detections if d.label not in {"worker", "customer"}}
+        object_ids = (set(focus_object_ids) if focus_object_ids is not None else
+                      {d.track_id for d in detections if d.label not in {"worker", "customer"}})
         if self._open and self._open.activity != activity:
             self._close(timestamp)
         if self._open is None:
@@ -119,6 +121,7 @@ def map_detection_rows(
             confidence=float(row.get("activity_confidence", 0.0)),
             attributes=row.get("activity_attributes"),
             evidence=row.get("evidence"),
+            focus_object_ids=row.get("activity_object_ids"),
         )
     frame_period = rows[-1].get("frame_period", 1 / 15) if rows else 0.0
     return mapper.finish(last_time + float(frame_period))
