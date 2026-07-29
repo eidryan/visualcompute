@@ -99,6 +99,7 @@ def generate_demo(output_dir: Path) -> dict[str, Path]:
                 "activity": active.activity if active else None,
                 "activity_confidence": active.confidence if active else 0.0,
                 "activity_attributes": active.attributes if active else {},
+                "activity_object_ids": list(active.object_ids) if active else [],
                 "evidence": list(active.evidence) if active else [],
                 "detections": [item.to_dict() for item in detections_at(timestamp)],
             }
