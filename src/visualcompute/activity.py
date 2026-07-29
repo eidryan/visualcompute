@@ -16,7 +16,7 @@ ACTIVITY_META = {
     "approach_station": ("APPROACHING STATION", (118, 215, 255)),
     "pick_up_bowl": ("PICKING UP BOWL", (255, 190, 92)),
     "place_bowl_on_scale": ("BOWL ON SCALE", (106, 238, 184)),
-    "dispense_acai": ("DISPENSING AÇAÍ", (231, 116, 255)),
+    "dispense_acai": ("DISPENSING ACAI", (231, 116, 255)),
     "retrieve_ingredient": ("GETTING INGREDIENT", (255, 201, 92)),
     "add_ingredient": ("ADDING INGREDIENT", (91, 232, 255)),
     "mix_contents": ("MIXING", (255, 140, 188)),
