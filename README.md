@@ -65,7 +65,18 @@ Each detection line is a JSON object:
 {"timestamp": 3.2, "detections": [{"track_id": 7, "label": "bowl", "confidence": 0.93, "bbox": [540, 380, 650, 475]}]}
 ```
 
-For a real pilot, connect a custom RT-DETR/YOLO detector and ByteTrack/BoT-SORT tracker to this contract. A generic COCO model is useful for people and phones but will not reliably recognize açaí utensils, ingredient bins, order states, or actions; those require labeled station footage and an action/state layer.
+Run the included Ultralytics YOLO + ByteTrack exporter with the optional dependency:
+
+```bash
+pip install -e ".[yolo]"
+visualcompute yolo-track footage.mp4 \\
+  --output artifacts/real_run/yolo_tracks.jsonl \\
+  --model yolo11n.pt --confidence 0.15
+```
+
+Every row records the actual model name, tracker, frame index, bounding boxes, COCO class, confidence, and session-local track ID. Load the JSONL beside the clean video in `viewer/synced_dashboard.html` to render labels such as `#07 BOWL 83%`.
+
+A generic COCO model is useful for people, bowls and cups but will not reliably recognize açaí utensils, ingredient bins, order states, or actions; those require labeled station footage and a separate action/state layer. The dashboard intentionally keeps detector output and activity evidence separate.
 
 ## Activity ontology
 
