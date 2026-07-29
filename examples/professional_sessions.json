@@ -2,15 +2,6 @@
   "schema_version": "1.1",
   "sessions": [
     {
-      "id": "ucf_fastfood",
-      "label": "UCF Fast Food — sandwich assembly",
-      "video": "ucf_fastfood_browser.mp4",
-      "activity_log": "ucf_activity_log.json",
-      "tracks": "ucf_yolo_tracks.jsonl",
-      "badge": "ACTUAL YOLO + BYTETRACK / HUMAN ACTIVITY REVIEW",
-      "description": "Static-camera fast-food sequence. Boxes are YOLO detections; the activity timeline is a separate human-reviewed stream."
-    },
-    {
       "id": "breakfast_cereals",
       "label": "Breakfast Actions — bowl, pour and mix",
       "video": "breakfast_cereals_browser.mp4",
@@ -18,6 +9,15 @@
       "tracks": "breakfast_yolo_tracks.jsonl",
       "badge": "ACTUAL YOLO + BYTETRACK / SOURCE ACTIVITY GT",
       "description": "Fixed-view preparation. Boxes are YOLO detections; the activity timeline comes from published temporal annotations."
+    },
+    {
+      "id": "ucf_fastfood",
+      "label": "UCF Fast Food — sandwich assembly (legacy overlay)",
+      "video": "ucf_fastfood_browser.mp4",
+      "activity_log": "ucf_activity_log.json",
+      "tracks": "ucf_yolo_tracks.jsonl",
+      "badge": "ACTUAL YOLO + BYTETRACK / HUMAN ACTIVITY REVIEW",
+      "description": "The source research video contains its original 2001 segmentation overlay; the page adds current YOLO boxes. Activity timing is a separate human-reviewed stream."
     }
   ]
 }
