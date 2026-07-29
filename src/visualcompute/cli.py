@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from .activity import load_events, write_activity_log
@@ -8,6 +9,7 @@ from .annotate import annotate_video
 from .demo import generate_demo
 from .engine import map_detection_rows, read_detection_rows
 from .real_demo import generate_real_demo
+from .yolo_tracks import generate_yolo_tracks
 
 
 def _demo(args: argparse.Namespace) -> int:
@@ -44,6 +46,18 @@ def _real_demo(args: argparse.Namespace) -> int:
     return 0
 
 
+def _yolo_track(args: argparse.Namespace) -> int:
+    summary = generate_yolo_tracks(
+        Path(args.video),
+        Path(args.output),
+        model_name=args.model,
+        confidence=args.confidence,
+        image_size=args.image_size,
+    )
+    print("yolo_summary: " + json.dumps(summary, ensure_ascii=False))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="visualcompute",
@@ -70,6 +84,17 @@ def build_parser() -> argparse.ArgumentParser:
     annotate.add_argument("--order-id", default="ORDER_UNKNOWN")
     annotate.add_argument("--station-id", default="station_unknown")
     annotate.set_defaults(func=_annotate)
+
+    yolo_track = subparsers.add_parser(
+        "yolo-track",
+        help="Run actual Ultralytics YOLO detections with ByteTrack IDs",
+    )
+    yolo_track.add_argument("video")
+    yolo_track.add_argument("--output", required=True, help="Frame-level JSONL output")
+    yolo_track.add_argument("--model", default="yolo11n.pt")
+    yolo_track.add_argument("--confidence", type=float, default=0.15)
+    yolo_track.add_argument("--image-size", type=int, default=416)
+    yolo_track.set_defaults(func=_yolo_track)
     return parser
 
 
