@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "visualcompute"
+version = "0.1.0"
+description = "Map quick-service preparation video into annotated footage and activity logs"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26,<3",
+  "opencv-python-headless>=4.10,<5",
+  "PyYAML>=6.0,<7",
+]
+
+[project.optional-dependencies]
+yolo = ["ultralytics>=8.3,<9"]
+dev = ["pytest>=8.0,<9"]
+
+[project.scripts]
+visualcompute = "visualcompute.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"
